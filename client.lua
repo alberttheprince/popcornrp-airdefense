@@ -3,6 +3,7 @@ local nogozone
 local nogozone2
 local ran = false
 local ran2 = false
+local QBCore = exports['qb-core']:GetCoreObject() -- Remove if not QBCore
 
 local function ApplyInaccuracy(targetCoords)
     local xOffset = math.random(-accuracy, accuracy) / 100
