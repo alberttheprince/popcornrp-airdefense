@@ -21,12 +21,12 @@ CreateThread(function()
         local pCoords = GetEntityCoords(ped)
         local dist = #(pCoords - vector3(1689.49, 2602.64, 45.56))
         PlayerData = QBCore.Functions.GetPlayerData() -- remove PlayerData = QBCore.Functions.GetPlayerData() if you want this to be standalone or change for your framework
-        if dist < 250 and GetEntityHeightAboveGround(PlayerPedId()) > 5.0 and IsPedInFlyingVehicle(ped) and (PlayerData.job.name ~= 'police' and PlayerData.job.name ~= 'ambulance') then -- remove (PlayerData.job ~= 'police' or 'ambulance') if you want this to be standalone or change for your framework
+        if dist < 300 and GetEntityHeightAboveGround(PlayerPedId()) > 5.0 and IsPedInFlyingVehicle(ped) and (PlayerData.job.name ~= 'police' and PlayerData.job.name ~= 'ambulance') then -- remove (PlayerData.job ~= 'police' or 'ambulance') if you want this to be standalone or change for your framework
             local count = 0
             local random = math.random(1,5)
             if not ran then
                 ran = true
-                nogozone = AddBlipForRadius(1689.49, 2602.64, 45.56, 250.0)
+                nogozone = AddBlipForRadius(1689.49, 2602.64, 45.56, 300.0)
                 SetBlipColour(nogozone, 1)
                 SetBlipAlpha(nogozone, 128)
             end
@@ -34,9 +34,9 @@ CreateThread(function()
                 local targetCoords = ApplyInaccuracy(pCoords)
                 AddExplosion(targetCoords.x, targetCoords.y, targetCoords.z, 18, 2.0, true, false, 1.0)
                 count = count + 1
-                Wait(math.random(250, 500))
+                Wait(math.random(200, 500))
             end
-        elseif dist > 250 and ran then
+        elseif dist > 300 and ran then
             RemoveBlip(nogozone)
             ran = false
         end
@@ -63,7 +63,7 @@ CreateThread(function()
                 local targetCoords = ApplyInaccuracy(pCoords)
                 AddExplosion(targetCoords.x, targetCoords.y, targetCoords.z, 18, 2.0, true, false, 1.0)
                 count = count + 1
-                Wait(math.random(250, 500))
+                Wait(math.random(200, 500))
             end
         elseif dist > 700 and ran2 then
             RemoveBlip(nogozone2)
