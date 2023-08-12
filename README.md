@@ -5,9 +5,13 @@ A simple air defence resource to shoot at helicopters and airplanes flying near 
 
 - QBCore if you want job exceptions
 
-This resource is provided as is. No support or issue fixes will be provided. Comments have been left in the client.lua for things you can edit. 
+This resource is provided as is. No support or issue fixes will be provided. Comments have been left in the client.lua for things you can edit. I am not an experienced programmer or dev, I made this simply as a fun resource for my community, and I know it may need to be better code. 
 
 If you're not happy with something in it, change it yourself.
 
-If you don't know how to change it yourself after reading the comments, no soup for you.
+If you need to learn to change it yourself after reading the comments, there is no soup for you.
 
+Thank you to Squirrel for helping me with this and teaching me about Lua coding. Please check out his far better resource:
+https://github.com/Sqrl34/sqrl-nightclubs
+
+Thank you to Brian (briantu) on the CFX discord for providing a simple foundation for this resource while I explored what the AirDefense natives were (I still have no idea what they do).
