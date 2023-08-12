@@ -18,3 +18,5 @@ Thank you to Squirrel for helping me with this and teaching me about Lua coding.
 https://github.com/Sqrl34/sqrl-nightclubs
 
 Thank you to Brian (briantu) on the CFX discord for providing a simple foundation for this resource while I explored what the AirDefense natives were (I still have no idea what they do).
+
+Thank you to Jorn and Stan for explaining the difference between 'and' and 'or'.
