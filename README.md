@@ -12,7 +12,7 @@ This resource is provided as is. No support or issue fixes will be provided. Com
 
 If you're not happy with something in it, change it yourself.
 
-If you need help changing it after reading the comments, there is no soup for you.
+If you need help changing it after reading the comments, then no soup for you.
 
 Thank you to Squirrel for helping me with this and teaching me about Lua coding. Please check out his far better resource:
 https://github.com/Sqrl34/sqrl-nightclubs
