@@ -1,9 +1,10 @@
+local QBCore = exports['qb-core']:GetCoreObject()
+
 local accuracy = 800.0 -- higher number is more inaccurate
 local nogozone
 local nogozone2
 local ran = false
 local ran2 = false
-local QBCore = exports['qb-core']:GetCoreObject() -- Remove if not QBCore
 
 local function ApplyInaccuracy(targetCoords)
     local xOffset = math.random(-accuracy, accuracy) / 100
@@ -20,7 +21,7 @@ CreateThread(function()
         local pCoords = GetEntityCoords(ped)
         local dist = #(pCoords - vector3(1689.49, 2602.64, 45.56))
         PlayerData = QBCore.Functions.GetPlayerData() -- remove PlayerData = QBCore.Functions.GetPlayerData() if you want this to be standalone or change for your framework
-        if dist < 250 and GetEntityHeightAboveGround(PlayerPedId()) > 5.0 and IsPedInFlyingVehicle(ped) and (PlayerData.job ~= 'police' or 'ambulance') then -- remove (PlayerData.job ~= 'police' or 'ambulance') if you want this to be standalone or change for your framework
+        if dist < 250 and GetEntityHeightAboveGround(PlayerPedId()) > 5.0 and IsPedInFlyingVehicle(ped) and (PlayerData.job.name ~= 'police' and PlayerData.job.name ~= 'ambulance') then -- remove (PlayerData.job ~= 'police' or 'ambulance') if you want this to be standalone or change for your framework
             local count = 0
             local random = math.random(1,5)
             if not ran then
@@ -49,7 +50,7 @@ CreateThread(function()
         local pCoords = GetEntityCoords(ped)
         local dist = #(pCoords - vector3(-2243.77, 3141.49, 32.81))
         PlayerData = QBCore.Functions.GetPlayerData() -- remove PlayerData = QBCore.Functions.GetPlayerData() if you want this to be standalone or change for your framework
-        if dist < 700 and GetEntityHeightAboveGround(PlayerPedId()) > 5.0 and IsPedInFlyingVehicle(ped) and (PlayerData.job ~= 'police' or 'ambulance') then -- remove (PlayerData.job ~= 'police' or 'ambulance') if you want this to be standalone or change for your framework
+        if dist < 700 and GetEntityHeightAboveGround(PlayerPedId()) > 5.0 and IsPedInFlyingVehicle(ped) and (PlayerData.job.name ~= 'police') and (PlayerData.job.name ~= 'ambulance') then -- remove (PlayerData.job ~= 'police' or 'ambulance') if you want this to be standalone or change for your framework
             local count = 0
             local random = math.random(1,5)
             if not ran2 then
