@@ -6,7 +6,7 @@ A simple air defence resource to shoot at helicopters and airplanes flying near 
 
 **Dependencies:**
 
-- QBCore if you want job exceptions
+- QBox or QBCore if you want job exceptions
 
 This resource is provided as is. No support or issue fixes will be provided. Comments have been left in the client.lua for things you can edit. I am not an experienced programmer or dev, I made this simply as a fun resource for my community, and it may need to be better coded. 
 
