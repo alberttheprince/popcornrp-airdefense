@@ -5,69 +5,141 @@ local nogozone
 local nogozone2
 local ran = false
 local ran2 = false
+local isAlarmActive = false
+local isExplosionActive = false
 
 local function ApplyInaccuracy(targetCoords)
-    local xOffset = math.random(-accuracy, accuracy) / 100
-    local yOffset = math.random(-accuracy, accuracy) / 100
-    local zOffset = math.random(-accuracy, accuracy) / 100
+    local offset = math.random(-accuracy, accuracy) / 100
+    local xOffset = offset
+    local yOffset = offset
+    local zOffset = offset
     return vector3(targetCoords.x + xOffset, targetCoords.y + yOffset, targetCoords.z + zOffset)
 end
 
-
 CreateThread(function()
     while true do
-        Wait(math.random(1, 2)*1000)
+        Wait(math.random(1, 2) * 1000)
         local ped = PlayerPedId()
-        local pCoords = GetEntityCoords(ped)
-        local dist = #(pCoords - vector3(1689.49, 2602.64, 45.56))
-        PlayerData = QBCore.Functions.GetPlayerData() -- remove PlayerData = QBCore.Functions.GetPlayerData() if you want this to be standalone or change for your framework
-        if dist < 300 and GetEntityHeightAboveGround(PlayerPedId()) > 5.0 and IsPedInFlyingVehicle(ped) and (PlayerData.job.name ~= 'police' and PlayerData.job.name ~= 'ambulance') then -- remove (PlayerData.job ~= 'police' or 'ambulance') if you want this to be standalone or change for your framework
+        local dist = #(GetEntityCoords(ped) - vector3(1689.49, 2602.64, 45.56))
+        local PlayerData = QBCore.Functions.GetPlayerData()
+        
+        if dist < 300 and GetEntityHeightAboveGround(ped) > 5.0 and IsPedInFlyingVehicle(ped) and (PlayerData.job.name ~= 'police' and PlayerData.job.name ~= 'ambulance') then
             local count = 0
-            local random = math.random(1,5)
+            local random = math.random(1, 5)
+
             if not ran then
                 ran = true
                 nogozone = AddBlipForRadius(1689.49, 2602.64, 45.56, 300.0)
                 SetBlipColour(nogozone, 1)
                 SetBlipAlpha(nogozone, 128)
             end
+            
             while count < random do
-                local targetCoords = ApplyInaccuracy(pCoords)
-                AddExplosion(targetCoords.x, targetCoords.y, targetCoords.z, 18, 2.0, true, false, 1.0)
-                count = count + 1
-                Wait(math.random(200, 500))
+                if not isAlarmActive then
+                    QBCore.Functions.Notify('Alarm activated! Seek cover in 10 seconds!', 'error')
+                    isAlarmActive = true
+                    Citizen.Wait(10000) -- Wait for 10 seconds before explosions
+                    QBCore.Functions.Notify('Explosions imminent!', 'error')
+                    isExplosionActive = true
+                end
+                
+                while isExplosionActive do
+                    local ped = PlayerPedId()
+                    local pCoords = GetEntityCoords(ped)
+                    local targetCoords = ApplyInaccuracy(pCoords)
+                    AddExplosion(targetCoords.x, targetCoords.y, targetCoords.z, 18, 2.0, true, false, 1.0)
+                    count = count + 1
+                    Wait(math.random(200, 500))
+
+                    -- Check if the player is still within the zone, if not, deactivate explosions
+                    local dist = #(pCoords - vector3(1689.49, 2602.64, 45.56))
+                    if dist >= 300 then
+                        isExplosionActive = false
+                        break
+                    end
+                end
+            end 
+        elseif dist > 300 then
+            if ran then
+                RemoveBlip(nogozone)
+                ran = false
+                isAlarmActive = false
+                isExplosionActive = false
             end
-        elseif dist > 300 and ran then
+        end
+
+        local isPlayerDead = IsEntityDead(ped)
+        if isPlayerDead then 
             RemoveBlip(nogozone)
             ran = false
+            isAlarmActive = false
+            isExplosionActive = false
+            Citizen.Wait(1000)
         end
     end
 end)
 
+
 CreateThread(function()
     while true do
-        Wait(math.random(1, 2)*1000)
+        Wait(math.random(1, 2) * 1000)
         local ped = PlayerPedId()
         local pCoords = GetEntityCoords(ped)
         local dist = #(pCoords - vector3(-2243.77, 3141.49, 32.81))
-        PlayerData = QBCore.Functions.GetPlayerData() -- remove PlayerData = QBCore.Functions.GetPlayerData() if you want this to be standalone or change for your framework
-        if dist < 700 and GetEntityHeightAboveGround(PlayerPedId()) > 5.0 and IsPedInFlyingVehicle(ped) and (PlayerData.job.name ~= 'police') and (PlayerData.job.name ~= 'ambulance') then -- remove (PlayerData.job ~= 'police' or 'ambulance') if you want this to be standalone or change for your framework
+        local PlayerData = QBCore.Functions.GetPlayerData()
+        
+        if dist < 700 and GetEntityHeightAboveGround(ped) > 5.0 and IsPedInFlyingVehicle(ped) and (PlayerData.job.name ~= 'police') and (PlayerData.job.name ~= 'ambulance') then
             local count = 0
-            local random = math.random(1,5)
+            local random = math.random(1, 5)
+
             if not ran2 then
                 ran2 = true
                 nogozone2 = AddBlipForRadius(-2243.77, 3141.49, 32.81, 700.0)
                 SetBlipColour(nogozone2, 1)
                 SetBlipAlpha(nogozone2, 128)
             end
+            
             while count < random do
-                local targetCoords = ApplyInaccuracy(pCoords)
-                AddExplosion(targetCoords.x, targetCoords.y, targetCoords.z, 18, 2.0, true, false, 1.0)
-                count = count + 1
-                Wait(math.random(200, 500))
+                if not isAlarmActive then
+                    QBCore.Functions.Notify('Alarm activated! Seek cover in 10 seconds!', 'error')
+                    isAlarmActive = true
+                    Citizen.Wait(10000) -- Wait for 10 seconds before explosions
+                    QBCore.Functions.Notify('Explosions imminent!', 'error')
+                    isExplosionActive = true
+                end
+                
+                while isExplosionActive do
+                    local ped = PlayerPedId()
+                    local pCoords = GetEntityCoords(ped)
+                    local targetCoords = ApplyInaccuracy(pCoords)
+                    AddExplosion(targetCoords.x, targetCoords.y, targetCoords.z, 18, 2.0, true, false, 1.0)
+                    count = count + 1
+                    Wait(math.random(200, 500))
+
+                    -- Check if the player is still within the zone, if not, deactivate explosions
+                    local dist = #(pCoords - vector3(-2243.77, 3141.49, 32.81))
+                    if dist >= 700 then
+                        isExplosionActive = false
+                        break
+                    end
+                end
+            end 
+        elseif dist > 700 then
+            if ran2 then
+                RemoveBlip(nogozone2)
+                ran2 = false
+                isAlarmActive = false
+                isExplosionActive = false
             end
-        elseif dist > 700 and ran2 then
+        end
+
+        local isPlayerDead = IsEntityDead(ped)
+        if isPlayerDead then 
             RemoveBlip(nogozone2)
-            ran = false
+            ran2 = false
+            isAlarmActive = false
+            isExplosionActive = false
+            Citizen.Wait(1000)
         end
     end
 end)
