@@ -8,6 +8,8 @@ local ran2 = false
 local isAlarmActive = false
 local isExplosionActive = false
 
+Config.Timer = 5000 -- edit this to change the length of the timer for users to exit the area, timer in MS. 10000 = 10 seconds
+
 local function ApplyInaccuracy(targetCoords)
     local offset = math.random(-accuracy, accuracy) / 100
     local xOffset = offset
@@ -36,10 +38,10 @@ CreateThread(function()
             
             while count < random do
                 if not isAlarmActive then
-                    QBCore.Functions.Notify('Alarm activated! Seek cover in 10 seconds!', 'error')
+                    QBCore.Functions.Notify('You are entering restricted airspace! Please leave in the next '..(Config.Timer / 1000)..' seconds!', 'error')     
                     isAlarmActive = true
-                    Citizen.Wait(10000) -- Wait for 10 seconds before explosions
-                    QBCore.Functions.Notify('Explosions imminent!', 'error')
+                    Wait(Config.Timer) -- Wait for 10 seconds before explosions
+                    QBCore.Functions.Notify('Air defense systems have been activated! Get out of here!', 'error')
                     isExplosionActive = true
                 end
                 
@@ -74,7 +76,7 @@ CreateThread(function()
             ran = false
             isAlarmActive = false
             isExplosionActive = false
-            Citizen.Wait(1000)
+            Wait(1000)
         end
     end
 end)
@@ -101,10 +103,9 @@ CreateThread(function()
             
             while count < random do
                 if not isAlarmActive then
-                    QBCore.Functions.Notify('Alarm activated! Seek cover in 10 seconds!', 'error')
-                    isAlarmActive = true
-                    Citizen.Wait(10000) -- Wait for 10 seconds before explosions
-                    QBCore.Functions.Notify('Explosions imminent!', 'error')
+                    QBCore.Functions.Notify('You are entering restricted airspace! Please leave in the next '..(Config.Timer / 1000)..' seconds!', 'error')                     isAlarmActive = true
+                    Wait(Config.Timer) -- Wait for 10 seconds before explosions
+                    QBCore.Functions.Notify('Air defense systems have been activated! Get out of here!', 'error')
                     isExplosionActive = true
                 end
                 
@@ -139,7 +140,7 @@ CreateThread(function()
             ran2 = false
             isAlarmActive = false
             isExplosionActive = false
-            Citizen.Wait(1000)
+            Wait(1000)
         end
     end
 end)
