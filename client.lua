@@ -103,7 +103,8 @@ CreateThread(function()
             
             while count < random do
                 if not isAlarmActive then
-                    QBCore.Functions.Notify('You are entering restricted airspace! Please leave in the next '..(Config.Timer / 1000)..' seconds!', 'error')                     isAlarmActive = true
+                    QBCore.Functions.Notify('You are entering restricted airspace! Please leave in the next '..(Config.Timer / 1000)..' seconds!', 'error')                    
+                    isAlarmActive = true
                     Wait(Config.Timer) -- Wait for 10 seconds before explosions
                     QBCore.Functions.Notify('Air defense systems have been activated! Get out of here!', 'error')
                     isExplosionActive = true
